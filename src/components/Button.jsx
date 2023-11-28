@@ -4,10 +4,21 @@ function Button({ setQuestionNumber, count }) {
     count += 1;
     setQuestionNumber(count);
   };
+  const clickHandlerPrevious = () => {
+    if (count > 1) {
+
+      count -= 1;
+      setQuestionNumber(count);
+    }
+
+  };
   return (
     <div className="btn">
       <button className="submit" onClick={clickHandler}>
         Next
+      </button>
+      <button className="submit" onClick={clickHandlerPrevious}>
+        Prev
       </button>
     </div>
   );
