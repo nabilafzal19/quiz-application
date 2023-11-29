@@ -104,7 +104,6 @@ function Question() {
           <Button setQuestionNumber={setQuestionNumber} count={questionNumber} SetTimer={SetTimer} />
           <div className="timer">{timer}</div>
         </div>
-
         : <Result attempts={attempts} correctAnswer={correctAnswer} />}
 
     </>
