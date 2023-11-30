@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-function Button({ setQuestionNumber, count, SetTimer }) {
-  const [prevTime, setPrevTime] = useState()
+function Button({ setQuestionNumber, count, timerTrack, type, downloadAnswersPDF }) {
   const clickHandler = () => {
     count += 1;
-    setPrevTime(() => {
-      SetTimer((time) => {
-        return time;
-      })
-    })
-    SetTimer(120)
+    // SetTimer(120)
     setQuestionNumber(count);
   };
   const clickHandlerPrevious = () => {
@@ -19,14 +13,27 @@ function Button({ setQuestionNumber, count, SetTimer }) {
 
   };
   return (
-    <div className="btn">
-      <button className="submit" onClick={clickHandler} >
-        Next
-      </button>
-      <button className="submit" onClick={clickHandlerPrevious} disabled={count === 1}>
-        Prev
-      </button>
-    </div>
+
+    <>
+      {type === 'download' ? (
+        <div className="btn">
+          <button className="submit" onClick={downloadAnswersPDF}>
+            Download PDF
+          </button>
+        </div>
+      ) : (
+        <div className="btn">
+          <button className="submit" onClick={clickHandler}>
+            Next
+          </button>
+          <button className="submit" onClick={clickHandlerPrevious} disabled={count <= 0}>
+            Prev
+          </button>
+        </div>
+      )}
+    </>
+
+
   );
 }
 

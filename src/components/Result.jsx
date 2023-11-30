@@ -1,7 +1,8 @@
 import React from 'react'
 import ScoreIndicator from './ScoreIndicator';
+import Button from './button';
 
-function Result({ attempts, correctAnswer }) {
+function Result({ attempts, correctAnswer, downloadAnswersPDF }) {
     const result = () => {
         let score = 0;
         for (let index = 1; index <= Object.keys(attempts).length; index++) {
@@ -18,7 +19,7 @@ function Result({ attempts, correctAnswer }) {
                 <h3>Incorrect {correctAnswer.length - result()}</h3>
                 <ScoreIndicator value={result()} maxValue={correctAnswer.length} />
             </div>
-
+            <Button downloadAnswersPDF={downloadAnswersPDF} type="download" />
         </>
 
     )
