@@ -130,6 +130,7 @@ function Question() {
   };
   return (
     <>
+      <h1>Quiz App</h1>
       {(questionNumber <= quetionsArray.length) ?
 
         <div className="card">
