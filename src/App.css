@@ -276,35 +276,87 @@ login form
   gap: 15px;
 }
 
-.apple-login-button,
 .google-login-button {
-  border-radius: 20px;
-  box-sizing: border-box;
-  padding: 10px 15px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
-    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-size: 11px;
-  gap: 5px;
+
 }
 
-.apple-login-button {
-  background-color: #000;
+
+/* RESET PASSWORD*/
+
+.form-container-reset {
+  width: 100%;
+  max-width: 275px;
+  height: 340px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 10px;
+  padding: 20px 30px;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.form-container-reset h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container-reset .form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container-reset .form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-container-reset .form-group input {
+  width: 90%;
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.form-container-reset .form-group input::placeholder {
+  opacity: 0.5;
+}
+
+.form-container-reset .form-group input:focus {
+  outline: none;
+  border-color: #13aa52;
+}
+
+.form-container-reset .form-submit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #fff;
-  border: 2px solid #000;
+  background: #13aa52;
+  border: none;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: inherit;
+  margin: 12px 0;
+  cursor: pointer;
+  border-radius: 6px;
 }
 
-.google-login-button {
-  border: 2px solid #747474;
+.form-container-reset .form-submit-btn:hover {
+  background-color: #13aa52;
 }
 
-.apple-icon,
-.google-icon {
-  font-size: 18px;
-  margin-bottom: 1px;
+
+
+.form-container-reset .signup-link {
+  align-self: center;
+  font-weight: 500;
 }
