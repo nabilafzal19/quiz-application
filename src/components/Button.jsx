@@ -15,11 +15,14 @@ function Button({ setQuestionNumber, count, timerTrack, type, downloadAnswersPDF
   return (
 
     <>
-      {type === 'download' ? (
+      {type === 'pdf' ? (
         <div className="btn">
           <button className="submit" onClick={downloadAnswersPDF}>
             Download PDF
           </button>
+          {/* <button className="submit" onClick={downloadAnswersPDF}>
+            Send on Email
+          </button> */}
         </div>
       ) : (
         <div className="btn">

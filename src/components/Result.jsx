@@ -19,7 +19,7 @@ function Result({ attempts, correctAnswer, downloadAnswersPDF }) {
                 <h3>Incorrect {correctAnswer.length - result()}</h3>
                 <ScoreIndicator value={result()} maxValue={correctAnswer.length} />
             </div>
-            <Button downloadAnswersPDF={downloadAnswersPDF} type="download" />
+            <Button downloadAnswersPDF={downloadAnswersPDF} type="pdf" />
         </>
 
     )

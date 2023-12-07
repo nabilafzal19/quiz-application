@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
 const googleClientId = import.meta.env.VITE_REACT_APP_GOOGLE_CLIENT_ID;
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -31,7 +32,9 @@ const Login = () => {
         axios(configuration)
             .then((result) => {
                 console.log(result);
+
                 if (result.status) {
+
                     navigate('/questions')
                 }
             })
@@ -39,7 +42,7 @@ const Login = () => {
     }
 
     const resetHandler = () => {
-        navigate('/reset')
+        navigate('/forgot-password')
     }
     return (
         <>

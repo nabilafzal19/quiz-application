@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const cors = require('cors')
 require('dotenv').config()
 const { OAuth2Client } = require('google-auth-library');
+const sendMail = require('./utils/nodemailer')
 const app = express()
 app.use(express.json())
 app.use(cors())
@@ -26,9 +27,12 @@ async function verifyGoogleToken(token) {
     }
 }
 app.patch('/reset-password', async (req, res) => {
-    const { email, password } = req.body
+    const { token, password } = req.body
     const hash = await bcrypt.hash(password, 10)
-
+    console.log('token decode', token)
+    const decoded = jwt.verify(token, 'quiz')
+    console.log(decoded)
+    const email = decoded.email
     const user = await User.findOne({ where: { email } })
     if (!user) return res.send("user does not exists!")
     if (user.password === null) return res.send("password does not exists")
@@ -74,6 +78,10 @@ app.post('/login', async (req, res) => {
     if (!compare) return new Error("incorrect password!")
     const token = await jwt.sign({ email: email }, 'mcq')
     res.json({ message: 'successful login', user, token })
+})
+
+app.post('/forgot-password', (req, res) => {
+    return sendMail(req, res)
 })
 app.listen(5011, () => {
     console.log('app is running on port 5011')

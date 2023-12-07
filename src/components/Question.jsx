@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "./button";
 import Result from "./Result";
 import jsPDF from "jspdf";
+import { toast } from "react-toastify";
 function Question() {
   const [questionNumber, setQuestionNumber] = useState(1);
   const [inputBox, setInputBox] = useState('')
@@ -128,6 +129,8 @@ function Question() {
     }
     pdf.save("quiz_answers.pdf");
   };
+
+
   return (
     <>
       <h1>Quiz App</h1>
