@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../utils/db');
+const Question = require('./questions');
 
 const User = sequelize.define('user', {
     id: {
@@ -17,6 +18,8 @@ const User = sequelize.define('user', {
         allowNull: true
     }
 });
+
+User.hasMany(Question);
 
 // sequelize.sync().then(() => {
 //     console.log('User table created successfully!');

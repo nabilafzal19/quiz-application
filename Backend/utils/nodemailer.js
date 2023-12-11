@@ -15,7 +15,7 @@ const sendMail = async (req, res) => {
         const user = await User.findOne({ where: { email } })
 
         if (!user) return res.status(400).send("user with this email doesn't exits")
-        const token = jwt.sign({ email }, 'quiz')
+        const token = jwt.sign({ email }, 'quiz', { expiresIn: '5m' })
         const link = `${process.env.CLIENT_BASE_URL}/reset-password?token=${token}`
         let mailOptions = {
             from: process.env.USER_EMAIL,

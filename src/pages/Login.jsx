@@ -11,7 +11,10 @@ const Login = () => {
 
     const handleGoogleLogin = async responseData => {
         const result = await axios.post('http://localhost:5011/login', { credential: responseData.credential })
-        if (result.data.status) navigate('/questions')
+        if (result.data.status) {
+            localStorage.setItem('token', result.data.token)
+            navigate('/questions')
+        }
         console.log(result.data)
     }
     const signupHandler = () => {
@@ -32,9 +35,8 @@ const Login = () => {
         axios(configuration)
             .then((result) => {
                 console.log(result);
-
                 if (result.status) {
-
+                    localStorage.setItem('token', result.data.token)
                     navigate('/questions')
                 }
             })

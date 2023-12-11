@@ -7,6 +7,7 @@ const cors = require('cors')
 require('dotenv').config()
 const { OAuth2Client } = require('google-auth-library');
 const sendMail = require('./utils/nodemailer')
+const { where } = require('sequelize')
 const app = express()
 app.use(express.json())
 app.use(cors())
@@ -30,6 +31,7 @@ app.patch('/reset-password', async (req, res) => {
     const { token, password } = req.body
     const hash = await bcrypt.hash(password, 10)
     console.log('token decode', token)
+    if (!token) return res.json({ message: "token expired", status: 401 })
     const decoded = jwt.verify(token, 'quiz')
     console.log(decoded)
     const email = decoded.email
@@ -61,6 +63,7 @@ app.post('/login', async (req, res) => {
         const payload = await verifyGoogleToken(credential)
 
         const userDetails = await User.findOne({ where: { email: (payload?.email) } })
+        const token = await jwt.sign({ email: payload?.email }, 'mcq', { expiresIn: '10m' })
         // console.log("userDetails", userDetails)
         if (payload) {
             // console.log("payload", (payload.email))
@@ -68,7 +71,7 @@ app.post('/login', async (req, res) => {
                 const user = await User.create({ email: payload.email })
                 return res.json({ message: 'successful login', status: 200, user })
             }
-            return res.json({ message: 'successful login', status: 200, userDetails })
+            return res.json({ message: 'successful login', status: 200, userDetails, token })
         }
         return res.send({ message: 'error while login with google', status: 401 })
     }
@@ -76,13 +79,32 @@ app.post('/login', async (req, res) => {
     const user = await User.findOne({ where: { email: email } })
     const compare = await bcrypt.compare(password, user.password)
     if (!compare) return new Error("incorrect password!")
-    const token = await jwt.sign({ email: email }, 'mcq')
-    res.json({ message: 'successful login', user, token })
+    const token = jwt.sign({ email: email }, 'mcq', { expiresIn: '10m' })
+    res.json({ message: 'successful login', status: 200, token })
 })
 
 app.post('/forgot-password', (req, res) => {
     return sendMail(req, res)
 })
+
+const verifyToken = async (req, res, next) => {
+    if (!req.headers.autherization) return res.status(400).json({ message: 'please provide token in headers' })
+    if (!req.headers.autherization.startsWith("Bearer ")) return res.status(400).json({ message: 'invalid format Bearer token is accepted' })
+    const token = req.headers.autherization.split("Bearer ")[1]
+
+    try {
+        const decoded = jwt.verify(token, 'quiz')
+        if (!decoded) return res.status(400).json({ message: 'token is invalid' })
+        const email = decoded.email
+        const user = await User.findOne({ where: { email } })
+        if (!user) return res.status(401).json({ message: "no user found" })
+        req.user = user
+        next()
+
+    } catch (error) {
+
+    }
+}
 app.listen(5011, () => {
     console.log('app is running on port 5011')
 })

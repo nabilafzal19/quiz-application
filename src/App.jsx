@@ -1,4 +1,5 @@
 import "./App.css";
+import ProtectedRoute from "./auth/ProtectedRoute";
 import Question from "./components/Question";
 import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
@@ -13,11 +14,12 @@ function App() {
       <ToastContainer />
       <BrowserRouter>
         <Routes>
-          <Route path="/questions" element={<Question />}></Route>
           <Route path="/" element={<Login />}></Route>
+          <Route path="/questions" element={<ProtectedRoute><Question /></ProtectedRoute>}></Route>
           <Route path="/signup" element={<Signup />}></Route>
           <Route path="/forgot-password" element={<ForgetPassword />}></Route>
           <Route path="/reset-password" element={<ResetPassword />}></Route>
+
         </Routes>
       </BrowserRouter>
 
