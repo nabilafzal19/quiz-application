@@ -1,26 +1,42 @@
-import React from "react";
-function Button({ setQuestionNumber, count }) {
+import React, { useState } from "react";
+function Button({ setQuestionNumber, count, timerTrack, type, downloadAnswersPDF }) {
   const clickHandler = () => {
     count += 1;
+    // SetTimer(120)
     setQuestionNumber(count);
   };
   const clickHandlerPrevious = () => {
     if (count > 1) {
-
       count -= 1;
       setQuestionNumber(count);
     }
 
   };
   return (
-    <div className="btn">
-      <button className="submit" onClick={clickHandler}>
-        Next
-      </button>
-      <button className="submit" onClick={clickHandlerPrevious}>
-        Prev
-      </button>
-    </div>
+
+    <>
+      {type === 'pdf' ? (
+        <div className="btn">
+          <button className="submit" onClick={downloadAnswersPDF}>
+            Download PDF
+          </button>
+          {/* <button className="submit" onClick={downloadAnswersPDF}>
+            Send on Email
+          </button> */}
+        </div>
+      ) : (
+        <div className="btn">
+          <button className="submit" onClick={clickHandler}>
+            Next
+          </button>
+          <button className="submit" onClick={clickHandlerPrevious} disabled={count <= 0}>
+            Prev
+          </button>
+        </div>
+      )}
+    </>
+
+
   );
 }
 

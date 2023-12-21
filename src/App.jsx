@@ -1,11 +1,29 @@
 import "./App.css";
+import ProtectedRoute from "./auth/ProtectedRoute";
 import Question from "./components/Question";
-
+import ForgetPassword from "./pages/ForgetPassword";
+import ResetPassword from "./pages/ResetPassword";
+import Signup from "./pages/Signup";
+import Login from "./pages/login";
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <>
-      <h1>Quiz App</h1>
-      <Question />
+      <ToastContainer />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />}></Route>
+          <Route path="/questions" element={<ProtectedRoute><Question /></ProtectedRoute>}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/forgot-password" element={<ForgetPassword />}></Route>
+          <Route path="/reset-password" element={<ResetPassword />}></Route>
+
+        </Routes>
+      </BrowserRouter>
+
+      {/* <Signup /> */}
     </>
   );
 }
